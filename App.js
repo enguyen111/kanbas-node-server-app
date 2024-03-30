@@ -7,10 +7,11 @@ import Courses from "./Courses.js";
 import Lab5 from "./Lab5.js";
 import Module from "./Module.js";
 import Todo from "./Todo.js";
+import cors from "cors";
 const app = express();
-
-Hello(app);
+app.use(cors());
 Lab5(app);
+Hello(app);
 Calculator(app);
 Assignments(app);
 Module(app);
