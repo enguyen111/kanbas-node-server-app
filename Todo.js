@@ -31,7 +31,7 @@ export default function Todo(app) {
         const todo = todos.find((t) => t.id === parseInt(id));
         if (todo !== undefined) {
             res.json(todo);
-        }{
+        }else{
             res.json(`No record was found, please try a different id.`);
         }
     });
@@ -55,7 +55,7 @@ export default function Todo(app) {
     app.get("/a5/todos/:id/completed/:completed", (req, res) => {
         const { id, completed } = req.params;
         const todo = todos.find((t) => t.id === parseInt(id));
-        todo.completed = completed;
+        todo.completed = Boolean(completed);
         res.json(todo);
     });
     app.get("/a5/todos/:id/description/:description", (req, res) => {
