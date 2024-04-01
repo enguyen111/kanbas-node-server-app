@@ -17,6 +17,15 @@ export default function Todo(app) {
         }
         res.json(todos);
     });
+    app.post("/a5/todos", (req, res) => {
+        const newTodo = {
+            ...req.body,
+            id: new Date().getTime(),
+        };
+        todos.push(newTodo);
+        res.json(newTodo);
+    });
+
     app.get("/a5/todos/create", (req, res) => {
         const newTodo = {
             id: new Date().getTime(),
@@ -35,6 +44,37 @@ export default function Todo(app) {
             res.json(`No record was found, please try a different id.`);
         }
     });
+
+    app.delete("/a5/todos/:id", (req, res) => {
+        const { id } = req.params;
+        const todo = todos.find((t) => t.id === parseInt(id));
+        if (!todo) {
+            res.status(404)
+                .json({ message: `Unable to delete Todo with ID ${id}` });
+            return;
+        }
+
+        todos.splice(todos.indexOf(todo), 1);
+        res.sendStatus(200);
+    });
+
+    app.put("/a5/todos/:id", (req, res) => {
+        const { id } = req.params;
+        const todoIndex = todos.findIndex((t) => t.id === parseInt(id));
+        if (!todo) {
+            res.status(404)
+                .json({ message: `Unable to update Todo with ID ${id}` });
+            return;
+        }
+
+        todos[todoIndex].title = req.body.title;
+        todos[todoIndex].description = req.body.description;
+        todos[todoIndex].due = req.body.due;
+        todos[todoIndex].completed = req.body.completed;
+        res.sendStatus(200);
+    });
+
+
     app.get("/a5/todos/:id/delete", (req, res) => {
         const { id } = req.params;
         const todo = todos.find((t) => t.id === parseInt(id));
