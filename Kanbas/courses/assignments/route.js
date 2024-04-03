@@ -1,6 +1,14 @@
 import db from "../../Database/index.js";
 function AssignmentRoutes(app) {
 
+    app.delete("/api/courses/:cid/assignments/:aid", (req, res) => {
+        const { aid } = req.params;
+        db.assignments = db.assignments.filter((a) => a._id !== aid);
+        res.sendStatus(200);
+    });
+
+
+
     app.post("/api/courses/:cid/assignments", (req, res) => {
         const { cid } = req.params;
         const { assignment, assignmentType } = req.body;
