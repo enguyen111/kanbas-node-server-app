@@ -10,10 +10,12 @@ import Todo from "./Todo.js";
 import cors from "cors";
 import CourseRoutes from "./Kanbas/courses/route.js";
 import ModuleRoutes from "./Kanbas/modules/routes.js";
+import AssignmentRoutes from "./Kanbas/courses/assignments/route.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+AssignmentRoutes(app);
 CourseRoutes(app);
 ModuleRoutes(app);
 Lab5(app);
