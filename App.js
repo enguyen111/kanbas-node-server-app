@@ -16,13 +16,14 @@ import mongoose from "mongoose";
 import UserRoutes from "./models/Users/routes.js";
 import session from "express-session";
 const app = express();
+
+app.use(express.json());
+mongoose.connect("mongodb://127.0.0.1:27017/kanbas");
 app.use(cors({
     credentials: true,
     //origin: "http://localhost:3000",
     origin: process.env.FRONTEND_URL
 }));
-app.use(express.json());
-mongoose.connect("mongodb://127.0.0.1:27017/kanbas");
 const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     //secret: "my secret key",
