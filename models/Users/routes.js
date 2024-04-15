@@ -46,7 +46,7 @@ export default function UserRoutes(app) {
         }
         const currentUser2 = await dao.createUser(req.body);
         req.session["currentUser"] = req.body;
-        res.json(currentUser);
+        res.json(req.session["currentUser"]);
     };
 
     const signin = async (req, res) => {
