@@ -1,5 +1,8 @@
 import db from "../Database/index.js";
+import * as dao from "../../models/Modules/dao.js"
+
 function ModuleRoutes(app) {
+    /*
     app.put("/api/modules/:mid", (req, res) => {
         const { mid } = req.params;
         const moduleIndex = db.modules.findIndex(
@@ -18,24 +21,25 @@ function ModuleRoutes(app) {
         res.sendStatus(200);
     });
 
+     */
 
-    app.post("/api/courses/:cid/modules", (req, res) => {
-        const { cid } = req.params;
-        const newModule = {
-            ...req.body,
-            course: cid,
-            _id: new Date().getTime().toString(),
-        };
-        db.modules.push(newModule);
-        res.send(newModule);
+    app.post("/api/courses/:cid/modules", async (req, res) => {
+        const newModule = await dao.createModule(req.body);
+        res.json(newModule);
     });
 
-
-    app.get("/api/courses/:cid/modules", (req, res) => {
+    app.get("/api/courses/:cid/modules", async (req, res) => {
         const { cid } = req.params;
-        const modules = db.modules
-            .filter((m) => m.course === cid);
-        res.send(modules);
+        const modules = await dao.findAllModules(cid);
+        /*
+        console.log("Lessons: "+ modules);
+        for (let i = 0; i < modules.length; i++) {
+            console.log(modules.lessons);
+            console.log("----")
+        }
+
+         */
+        res.json(modules);
     });
 }
 export default ModuleRoutes;
