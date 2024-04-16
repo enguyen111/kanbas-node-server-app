@@ -15,13 +15,15 @@ function ModuleRoutes(app) {
     });
 
 
-    app.delete("/api/modules/:mid", (req, res) => {
-        const { mid } = req.params;
-        db.modules = db.modules.filter((m) => m._id !== mid);
-        res.sendStatus(200);
-    });
+
 
      */
+
+    app.delete("/api/modules/:mid", async (req, res) => {
+        const status = await dao.deleteModule(req.params.mid);
+        res.json(status);
+    });
+
 
     app.post("/api/courses/:cid/modules", async (req, res) => {
         const newModule = await dao.createModule(req.body);
