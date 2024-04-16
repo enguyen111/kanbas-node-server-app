@@ -1,23 +1,13 @@
-import db from "../Database/index.js";
 import * as dao from "../../models/Modules/dao.js"
 
 function ModuleRoutes(app) {
-    /*
-    app.put("/api/modules/:mid", (req, res) => {
+
+    app.put("/api/modules/:mid", async (req, res) => {
         const { mid } = req.params;
-        const moduleIndex = db.modules.findIndex(
-            (m) => m._id === mid);
-        db.modules[moduleIndex] = {
-            ...db.modules[moduleIndex],
-            ...req.body
-        };
-        res.sendStatus(204);
+        const status = await dao.updateModule(mid, req.body);
+        res.json(status);
     });
 
-
-
-
-     */
 
     app.delete("/api/modules/:mid", async (req, res) => {
         const status = await dao.deleteModule(req.params.mid);
